@@ -14,7 +14,7 @@ struct node *root = NULL;
 char * bst_fun( char* nodos );
 void insert(int data);
 void inorder_recorrido(struct node* raiz);
-void recorrido_typo_1( struct node* raiz );
+void insertar_recorrido_typo_1( struct node** raiz, int data );
 void recorrido_typo_2( struct node* raiz );
 
 int main() {
@@ -26,7 +26,7 @@ int main() {
 
 }
 
-char * bst_fun( char* nodos ) {
+char* bst_fun( char* nodos ) {
     char* recorridoTipo2;
     char numero[1000] = "";
     int numeros[501];
@@ -52,25 +52,42 @@ char * bst_fun( char* nodos ) {
 
     printf("\nArray ints:\n");    
     for(int k=0; k<=numerosIndex; k++){
-        printf("%i  ", numeros[k]);
+        printf("%i ", numeros[k]);
     } 
     printf("\n----------------\n");    
 
+    for(int k=0; k<=numerosIndex; k++){
+        insertar_recorrido_typo_1( &root, numeros[k] );
+    }
+
+    recorrido_typo_2( root );
+    printf("\nRecorido inorder\n");
+    inorder_recorrido( root );
+    printf("\nRecorido inorder\n");
+    
     return recorridoTipo2;
 }
 
-void recorrido_typo_1( struct node* raiz ) {
-    if(raiz != NULL) {
-        printf("%d ", raiz->value);
-        inorder_recorrido(raiz->left);
-        inorder_recorrido(raiz->right);
-   }
+void insertar_recorrido_typo_1( struct node** raiz, int data ) {
+    if( (*raiz) == NULL) {
+        struct node *tempNode = (struct node*) malloc(sizeof(struct node));
+        tempNode->value = data;
+        tempNode->left = NULL;
+        tempNode->right = NULL;    
+        (*raiz) = tempNode;
+    } else {
+        if( data < (*raiz)->value ) {
+            insertar_recorrido_typo_1( &((*raiz)->left), data );
+        } else {
+            insertar_recorrido_typo_1( &((*raiz)->right), data );
+        }
+    }
 }
 
 void recorrido_typo_2( struct node* raiz ) {
     if(raiz != NULL) {
-        inorder_recorrido(raiz->left);
-        inorder_recorrido(raiz->right);
+        recorrido_typo_2(raiz->left);
+        recorrido_typo_2(raiz->right);
         printf("%d ", raiz->value);
    }
 }
