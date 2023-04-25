@@ -16,6 +16,7 @@ void insert(int data);
 void inorder_recorrido(struct node* raiz);
 void insertar_recorrido_typo_1( struct node** raiz, int data );
 void recorrido_typo_2( struct node* raiz );
+void recorrido_typo_2_a_string( struct node* raiz, char* cadena, int* index );
 
 int main() {
 
@@ -30,7 +31,6 @@ char* bst_fun( char* nodos ) {
     char* recorridoTipo2;
     char numero[1000] = "";
     int numeros[501];
-    bool flag = false;
 
     int j = 0;
     int numerosIndex = 0;
@@ -59,12 +59,20 @@ char* bst_fun( char* nodos ) {
     for(int k=0; k<=numerosIndex; k++){
         insertar_recorrido_typo_1( &root, numeros[k] );
     }
-
+    printf("\nRecorido typo 2\n");
     recorrido_typo_2( root );
     printf("\nRecorido inorder\n");
     inorder_recorrido( root );
-    printf("\nRecorido inorder\n");
+    printf("\n-----------------\n");
+
+    recorridoTipo2 = (char*) malloc( sizeof(char) * strlen(nodos) );   
     
+    int index = 0;
+    recorrido_typo_2_a_string( root, recorridoTipo2, &index );
+    recorridoTipo2[index - 1] = ' ';
+
+    printf("\n %s \n", recorridoTipo2 );    
+
     return recorridoTipo2;
 }
 
@@ -81,6 +89,23 @@ void insertar_recorrido_typo_1( struct node** raiz, int data ) {
         } else {
             insertar_recorrido_typo_1( &((*raiz)->right), data );
         }
+    }
+}
+
+void recorrido_typo_2_a_string( struct node* raiz, char* cadena, int* index ) {
+    if(raiz != NULL) {
+        recorrido_typo_2_a_string(raiz->left, cadena, index);
+        recorrido_typo_2_a_string(raiz->right, cadena, index);
+        
+        char temp[1000] = "";
+        sprintf(temp, "%d", raiz->value );
+        
+        for(int i = 0; i < strlen(temp); i++) {
+            cadena[*index] = temp[i];
+            (*index)++;
+        }
+        cadena[*index] = ',';
+        (*index)++;
     }
 }
 
