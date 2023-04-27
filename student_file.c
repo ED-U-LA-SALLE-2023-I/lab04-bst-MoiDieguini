@@ -23,8 +23,7 @@ int main() {
     char entrada[1000];
     printf("Escriba entrada:\n");
     scanf("%[^\n]%*c", entrada);
-    bst_fun(entrada);
-
+    printf("%s\n", bst_fun(entrada));
 }
 
 char* bst_fun( char* nodos ) {
@@ -50,28 +49,15 @@ char* bst_fun( char* nodos ) {
     }   
     numeros[numerosIndex] = atoi(numero);
 
-    printf("\nArray ints:\n");    
-    for(int k=0; k<=numerosIndex; k++){
-        printf("%i ", numeros[k]);
-    } 
-    printf("\n----------------\n");    
-
     for(int k=0; k<=numerosIndex; k++){
         insertar_recorrido_typo_1( &root, numeros[k] );
     }
-    printf("\nRecorido typo 2\n");
-    recorrido_typo_2( root );
-    printf("\nRecorido inorder\n");
-    inorder_recorrido( root );
-    printf("\n-----------------\n");
 
     recorridoTipo2 = (char*) malloc( sizeof(char) * strlen(nodos) );   
     
     int index = 0;
     recorrido_typo_2_a_string( root, recorridoTipo2, &index );
-    recorridoTipo2[index - 1] = ' ';
-
-    printf("\n %s \n", recorridoTipo2 );    
+    recorridoTipo2[index - 1] = ' '; // Elimina la última coma.
 
     return recorridoTipo2;
 }
