@@ -59,6 +59,7 @@ char* bst_fun( char* nodos ) {
     recorrido_typo_2_a_string( root, recorridoTipo2, &index );
     recorridoTipo2[index - 1] = ' '; // Elimina la última coma.
 
+    inorder_recorrido(root);
     return recorridoTipo2;
 }
 
@@ -119,7 +120,7 @@ void insert(int data) {
       root = tempNode;
    } else {
       actual = root;
-      padre = NULL;
+      padre = NULL; 
 
       while(1) {
          padre = actual;
